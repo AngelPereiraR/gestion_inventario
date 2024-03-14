@@ -1,2 +1,2 @@
-export 'home_view.dart';
-export 'test_view.dart';
+export 'management/home_view.dart';
+export 'management/test_view.dart';

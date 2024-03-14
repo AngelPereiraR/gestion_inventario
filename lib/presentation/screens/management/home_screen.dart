@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../views/views.dart';
-import '../widgets/custom_bottom_navigation.dart';
+import '../../views/views.dart';
+import '../../widgets/shared/custom_bottom_navigation.dart';
 
 class HomeScreen extends StatefulWidget {
   static const name = 'home-screen';
@@ -14,9 +14,13 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final viewRoutes = const <Widget>[HomeView(), TestView()];
   late PageController _pageController;
   int _currentPage = 0;
+
+  final viewRoutes = <Widget>[
+    const HomeView(),
+    const TestView(),
+  ];
 
   @override
   void initState() {
@@ -31,6 +35,20 @@ class _HomeScreenState extends State<HomeScreen> {
     super.dispose();
   }
 
+  void onPageChanged(int index) {
+    setState(() {
+      _currentPage = index;
+    });
+  }
+
+  void onItemTapped(int index) {
+    _pageController.animateToPage(
+      index,
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.ease,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,35 +61,27 @@ class _HomeScreenState extends State<HomeScreen> {
                 duration: const Duration(milliseconds: 300),
                 curve: Curves.ease,
               );
-              setState(() {
-                _currentPage--;
-              });
             }
-          } else {
+          } else if (details.velocity.pixelsPerSecond.dx < 0) {
             // Swipe from right to left (next screen)
-            if (details.velocity.pixelsPerSecond.dx < 0) {
-              if (_currentPage < 1) {
-                _pageController.nextPage(
-                  duration: const Duration(milliseconds: 300),
-                  curve: Curves.ease,
-                );
-                setState(() {
-                  _currentPage++;
-                });
-              }
+            if (_currentPage < viewRoutes.length - 1) {
+              _pageController.nextPage(
+                duration: const Duration(milliseconds: 300),
+                curve: Curves.ease,
+              );
             }
           }
         },
-        child: PageView.builder(
-            itemCount: viewRoutes.length,
-            controller: _pageController,
-            physics: const NeverScrollableScrollPhysics(),
-            itemBuilder: (context, index) {
-              _currentPage = index;
-              return viewRoutes[index];
-            }),
+        child: PageView(
+          controller: _pageController,
+          onPageChanged: onPageChanged,
+          children: viewRoutes,
+        ),
       ),
-      bottomNavigationBar: CustomBottomNavigation(currentIndex: _currentPage),
+      bottomNavigationBar: CustomBottomNavigation(
+        currentIndex: _currentPage,
+        onItemTapped: onItemTapped,
+      ),
     );
   }
 }
