@@ -38,7 +38,7 @@ class SideMenuState extends ConsumerState<SideMenu> {
           },
           children: [
             Padding(
-              padding: EdgeInsets.fromLTRB(20, hasNotch ? 0 : 20, 16, 0),
+              padding: EdgeInsets.fromLTRB(20, hasNotch ? 20 : 40, 16, 0),
               child: Text('Saludos', style: textStyles.titleMedium),
             ),
             Padding(
@@ -69,7 +69,7 @@ class SideMenuState extends ConsumerState<SideMenu> {
                     )
                   : CustomFilledButton(
                       onPressed: () {
-                        context.push('/login');
+                        context.push('/auth/0');
                       },
                       text: 'Iniciar sesión',
                     ),
@@ -79,7 +79,7 @@ class SideMenuState extends ConsumerState<SideMenu> {
               child: authState.user == null
                   ? CustomFilledButton(
                       onPressed: () {
-                        context.push('/register');
+                        context.push('/auth/1');
                       },
                       text: 'Registrarse',
                     )

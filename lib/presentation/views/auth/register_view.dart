@@ -1,21 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:gestion_inventario/presentation/providers/auth/register_form_provider.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../providers/providers.dart';
 import '../../widgets/widgets.dart';
 
-class RegisterScreen extends StatelessWidget {
-  static const name = 'register-screen';
-  const RegisterScreen({super.key});
+class RegisterView extends StatelessWidget {
+  const RegisterView({super.key});
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final scaffoldBackgroundColor = Theme.of(context).scaffoldBackgroundColor;
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
 
     return OrientationBuilder(builder: (context, orientation) {
       return GestureDetector(
@@ -43,7 +39,7 @@ class RegisterScreen extends StatelessWidget {
                                 size: 40, color: Colors.white)),
                         const Spacer(),
                         const Icon(
-                          Icons.create_outlined,
+                          Icons.person_add_alt_1_outlined,
                           color: Colors.white,
                           size: 100,
                         ),
@@ -54,8 +50,8 @@ class RegisterScreen extends StatelessWidget {
                     const SizedBox(height: 50),
                     Container(
                       height: orientation == Orientation.portrait
-                          ? size.height - 150
-                          : size.height + 330,
+                          ? size.height - 250
+                          : size.height + 225,
                       width: double.infinity,
                       decoration: BoxDecoration(
                         color: scaffoldBackgroundColor,
@@ -153,19 +149,6 @@ class _RegisterForm extends ConsumerWidget {
                   ? null
                   : ref.read(registerFormProvider.notifier).onFormSubmit,
             ),
-          ),
-          const SizedBox(height: 60),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Text('¿Ya tienes cuenta?'),
-              TextButton(
-                onPressed: () {
-                  context.push('/login');
-                },
-                child: const Text('Ingresa aquí'),
-              )
-            ],
           ),
         ],
       ),

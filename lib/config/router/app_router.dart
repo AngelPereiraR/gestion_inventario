@@ -26,14 +26,13 @@ final goRouterProvider = Provider((ref) {
         },
       ),
       GoRoute(
-        path: '/login',
-        name: LoginScreen.name,
-        builder: (context, state) => const LoginScreen(),
-      ),
-      GoRoute(
-        path: '/register',
-        name: RegisterScreen.name,
-        builder: (context, state) => const RegisterScreen(),
+        path: '/auth/:page',
+        name: AuthScreen.name,
+        builder: (context, state) {
+          final pageIndex = int.parse(state.pathParameters['page'] ?? '0');
+
+          return AuthScreen(pageIndex: pageIndex);
+        },
       ),
     ],
     redirect: (context, state) {
@@ -45,12 +44,12 @@ final goRouterProvider = Provider((ref) {
       }
 
       if (authStatus == AuthStatus.notAuthenticated) {
-        if (isGoingTo == '/login' || isGoingTo == '/register') return null;
+        if (isGoingTo == '/auth/0' || isGoingTo == '/auth/1') return null;
       }
 
       if (authStatus == AuthStatus.authenticated) {
-        if (isGoingTo == '/login' ||
-            isGoingTo == '/register' ||
+        if (isGoingTo == '/auth/0' ||
+            isGoingTo == '/auth/1' ||
             isGoingTo == '/splash') {
           return '/home/0';
         }

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-class CustomBottomNavigation extends StatelessWidget {
+class CustomAuthBottomNavigation extends StatelessWidget {
   final int currentIndex;
   final void Function(int) onItemTapped;
 
-  const CustomBottomNavigation({
+  const CustomAuthBottomNavigation({
     super.key,
     required this.currentIndex,
     required this.onItemTapped,
@@ -18,12 +18,12 @@ class CustomBottomNavigation extends StatelessWidget {
       elevation: 0,
       items: const [
         BottomNavigationBarItem(
-          icon: Icon(Icons.home_max_outlined),
-          label: 'Inicio',
+          icon: Icon(Icons.login_outlined),
+          label: 'Iniciar Sesión',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.preview_outlined),
-          label: 'Prueba',
+          icon: Icon(Icons.person_add_outlined),
+          label: 'Registrarse',
         ),
       ],
     );

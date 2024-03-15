@@ -6,15 +6,13 @@ import 'package:go_router/go_router.dart';
 import '../../providers/providers.dart';
 import '../../widgets/widgets.dart';
 
-class LoginScreen extends StatelessWidget {
-  static const name = 'login-screen';
-  const LoginScreen({super.key});
+class LoginView extends StatelessWidget {
+  const LoginView({super.key});
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final scaffoldBackgroundColor = Theme.of(context).scaffoldBackgroundColor;
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
 
     return OrientationBuilder(builder: (context, orientation) {
       return GestureDetector(
@@ -22,51 +20,49 @@ class LoginScreen extends StatelessWidget {
         child: PopScope(
           canPop: false,
           child: Scaffold(
-            body: SafeArea(
-              child: GeometricalBackground(
-                child: SingleChildScrollView(
-                  physics: const ClampingScrollPhysics(),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const SizedBox(height: 100),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          IconButton(
-                              onPressed: () {
-                                if (!context.canPop()) return;
-                                context.pop();
-                              },
-                              icon: const Icon(Icons.arrow_back_rounded,
-                                  size: 40, color: Colors.white)),
-                          const Spacer(),
-                          const Icon(
-                            Icons.inventory_outlined,
-                            color: Colors.white,
-                            size: 100,
-                          ),
-                          const Spacer(),
-                          const SizedBox(width: 50),
-                        ],
-                      ),
-                      const SizedBox(height: 120),
-                      Container(
-                        height: orientation == Orientation.portrait
-                            ? size.height - 320
-                            : size.height + 150,
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          color: scaffoldBackgroundColor,
-                          borderRadius: const BorderRadius.only(
-                              topRight: Radius.circular(100),
-                              topLeft: Radius.circular(100)),
+            body: GeometricalBackground(
+              child: SingleChildScrollView(
+                physics: const ClampingScrollPhysics(),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const SizedBox(height: 100),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        IconButton(
+                            onPressed: () {
+                              if (!context.canPop()) return;
+                              context.pop();
+                            },
+                            icon: const Icon(Icons.arrow_back_rounded,
+                                size: 40, color: Colors.white)),
+                        const Spacer(),
+                        const Icon(
+                          Icons.person_outline_rounded,
+                          color: Colors.white,
+                          size: 100,
                         ),
-                        child: const _LoginForm(),
-                      )
-                    ],
-                  ),
+                        const Spacer(),
+                        const SizedBox(width: 50),
+                      ],
+                    ),
+                    const SizedBox(height: 120),
+                    Container(
+                      height: orientation == Orientation.portrait
+                          ? size.height - 375
+                          : size.height + 25,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        color: scaffoldBackgroundColor,
+                        borderRadius: const BorderRadius.only(
+                            topRight: Radius.circular(100),
+                            topLeft: Radius.circular(100)),
+                      ),
+                      child: const _LoginForm(),
+                    )
+                  ],
                 ),
               ),
             ),
@@ -130,16 +126,6 @@ class _LoginForm extends ConsumerWidget {
                 onPressed: loginForm.isPosting
                     ? null
                     : ref.read(loginFormProvider.notifier).onFormSubmit),
-          ),
-          const SizedBox(height: 60),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Text('¿No tienes cuenta?'),
-              TextButton(
-                  onPressed: () => context.push('/register'),
-                  child: const Text('Crea una aquí'))
-            ],
           ),
         ],
       ),

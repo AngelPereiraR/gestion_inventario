@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../views/views.dart';
-import '../../widgets/shared/custom_bottom_navigation.dart';
+import '../../widgets/widgets.dart';
 
 class HomeScreen extends StatefulWidget {
   static const name = 'home-screen';
